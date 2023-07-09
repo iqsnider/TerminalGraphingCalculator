@@ -215,6 +215,7 @@ def render_frame(frame_height, frame_width, rotation_m, step, show_axes):
             if rpos[0] < frame_width and rpos[1] < frame_height and rpos[0] >=0 and rpos[1] >= 0:
                 output[rpos[1]][rpos[0]] = '#' #luminance(r,0.5, zbuffer, rpos)
 
+
     # --------> trefoil knot
     # R = 3.5
     # for t in decimal_range(-4, 4, 0.01):
