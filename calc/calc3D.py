@@ -1,9 +1,14 @@
 import re 
 import numpy as np
 import math as m
+import time
 
 
 class Graph:
+
+    """Vectorizes given parametric equations to later be used for rendering graphs
+    """
+
 
     def __init__(self, x, y, z):
         self.__x = x
@@ -16,6 +21,7 @@ class Graph:
     def __str__(self):
         return f"x = {self.__x}\ny = {self.__y}\nz = {self.__z}"
     
+    # makes an array of inital object (graph) data to be later projected
     def makemath(self, step):
 
         math_arr = []
@@ -31,63 +37,50 @@ class Graph:
                   math_arr.append(v)
 
         return math_arr
+    
+def realtimerender(voutput, frame_width, frame_height, graph_width, graph_height, phi=-0.05, thta= -0.3, psi= 0.3):
+     
+     usleep = lambda x: time.sleep(x/1000000.0)
+     
+     while True:
+
+        psi += 0.05
+        rotation_m = make_rotation(phi, thta, psi)
+
+        _routput = makeframe(voutput, rotation_m, frame_width, frame_height, graph_width, graph_height)
+
+        printframe(_routput, frame_height, frame_width)
+
+        print("\x1b["+ str(frame_height+1) + "A")
+        usleep(50000)
                   
 
 
-    def makeframe(self, math_arr, rotation_m, frame_width, frame_height, graph_width, graph_height):
+def makeframe(math_arr, rotation_m, frame_width, frame_height, graph_width, graph_height):
 
-        # output matrix
-        output = [ [' ']*frame_width for i in range(frame_height)]
+    # output matrix
+    output = [ [' ']*frame_width for i in range(frame_height)]
 
-        for i in range(0, len(math_arr)):
-             
-             v = math_arr[i]
+    for i in range(0, len(math_arr)):
+            
+            v = math_arr[i]
 
-             r = np.dot(rotation_m, v)
-             
-             rpos = [int(frame_width/2 + r[1]/graph_width * frame_width),
-                int(frame_height/2 - r[2]/graph_height * frame_height)]
-             
-             if rpos[0] < frame_width and rpos[1] < frame_height and rpos[0] >=0 and rpos[1] >= 0:
+            r = np.dot(rotation_m, v)
+            
+            rpos = [int(frame_width/2 + r[1]/graph_width * frame_width),
+            int(frame_height/2 - r[2]/graph_height * frame_height)]
+            
+            if rpos[0] < frame_width and rpos[1] < frame_height and rpos[0] >=0 and rpos[1] >= 0:
                 output[rpos[1]][rpos[0]] = '#'
 
-        return output
+    return output
     
-    def printframe(self, output, frame_height, frame_width):
-         # make frame
-        for k in range(0, frame_height):
-            for j in range(0, frame_width):
-                print(output[k][j], end="")
-            print("")
-
-    # def makeframe(self, step, rotation_m, frame_width, frame_height, graph_width, graph_height):
-    #     # output matrix
-    #     output = [ [' ']*frame_width for i in range(frame_height)]
-
-    #     for t_1 in decimal_range(-7, 7, step):
-    #         for t_2 in decimal_range(-7, 7, step):
-    #             x = t_1
-    #             y = t_2
-    #             z = t_1*t_2/10
-
-    #             v = np.array([x,y,z])
-    #             r = np.dot(rotation_m, v)
-
-
-    #             rpos = [int(frame_width/2 + r[1]/graph_width * frame_width),
-    #                 int(frame_height/2 - r[2]/graph_height * frame_height)]
-                
-    #             if rpos[0] < frame_width and rpos[1] < frame_height and rpos[0] >=0 and rpos[1] >= 0:
-    #                 output[rpos[1]][rpos[0]] = '#'
-
-    #     for k in range(0, frame_height):
-    #         for j in range(0, frame_width):
-    #             print(output[k][j], end="")
-    #         print("")
-
-                    
-         
-
+def printframe(output, frame_height, frame_width):
+        # make frame
+    for k in range(0, frame_height):
+        for j in range(0, frame_width):
+            print(output[k][j], end="")
+        print("")
 
 
 def decimal_range(start, stop, increment):

@@ -24,13 +24,13 @@ if __name__ == '__main__':
     graph_height = frame_height/(e_2_scale/(e_2tick_scale))
     graph_width = frame_width/(e_1_scale/(e_1tick_scale))
 
-
-
     param = cd.Graph(x, y, z)
 
     step = 0.2
 
-    voutput = param.makemath(step)
+    voutput = param.makemath(step) # precomputing saves about 50ms
+    
+    propogate = True
 
     # start_time = time.time()
 
@@ -38,39 +38,14 @@ if __name__ == '__main__':
     phi = -0.05
     thta = -0.3
     psi = 0.3
-
-    while True:
-
-        psi += 0.05
+    
+    if propogate == False:
         rotation_m = cd.make_rotation(phi, thta, psi)
+        routput = cd.makeframe(voutput, rotation_m, frame_width, frame_height, graph_width, graph_height)
+        cd.printframe(routput, frame_height, frame_width)
 
-        routput = param.makeframe(voutput, rotation_m, frame_width, frame_height, graph_width, graph_height)
+    else: cd.realtimerender(voutput, frame_width, frame_height, graph_width, graph_height)
 
-        param.printframe(routput, frame_height, frame_width)
-
-        print("\x1b["+ str(frame_height+1) + "A")
-        usleep(50000) 
-
-    # while True:
-    #     psi += 0.05
-    #     rotation_m = cd.make_rotation(phi, thta, psi)
-
-    #     param.makeframe(step, rotation_m, frame_width, frame_height, graph_width, graph_height)
-
-    #     print("\x1b["+ str(frame_height+1) + "A")
-    #     usleep(50000)
-
-    # psi += 0.05
-    # rotation_m = cd.make_rotation(phi, thta, psi)
-
-    # param.makeframe(step, rotation_m, frame_width, frame_height, graph_width, graph_height)
-
-    # psi += 0.05
-    # rotation_m = cd.make_rotation(phi, thta, psi)
-
-    # routput = param.makeframe(voutput, rotation_m, frame_width, frame_height, graph_width, graph_height)
-
-    # param.printframe(routput, frame_height, frame_width)
 
     # speed check
     # end_time = time.time()
