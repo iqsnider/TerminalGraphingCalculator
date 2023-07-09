@@ -1,12 +1,9 @@
 import calc3D as cd
-
-
-
-
-
-
+import time
 
 if __name__ == '__main__':
+
+    usleep = lambda x: time.sleep(x/1000000.0)
 
     x = "t_1"
     y = "t_2"
@@ -29,17 +26,55 @@ if __name__ == '__main__':
 
 
 
-    param = cd.Surface(x, y, z)
+    param = cd.Graph(x, y, z)
 
-    step = 0.02
-    rotation_m = cd.make_rotation(0.1, 0.2, 0.25)
+    step = 0.2
 
     voutput = param.makemath(step)
 
-    routput = param.makeframe(voutput, rotation_m, frame_width, frame_height, graph_width, graph_height)
+    # start_time = time.time()
 
-    # make frame
-    for k in range(0, frame_height):
-        for j in range(0, frame_width):
-            print(routput[k][j], end="")
-        print("") 
+    # define Euler angles
+    phi = -0.05
+    thta = -0.3
+    psi = 0.3
+
+    while True:
+
+        psi += 0.05
+        rotation_m = cd.make_rotation(phi, thta, psi)
+
+        routput = param.makeframe(voutput, rotation_m, frame_width, frame_height, graph_width, graph_height)
+
+        param.printframe(routput, frame_height, frame_width)
+
+        print("\x1b["+ str(frame_height+1) + "A")
+        usleep(50000) 
+
+    # while True:
+    #     psi += 0.05
+    #     rotation_m = cd.make_rotation(phi, thta, psi)
+
+    #     param.makeframe(step, rotation_m, frame_width, frame_height, graph_width, graph_height)
+
+    #     print("\x1b["+ str(frame_height+1) + "A")
+    #     usleep(50000)
+
+    # psi += 0.05
+    # rotation_m = cd.make_rotation(phi, thta, psi)
+
+    # param.makeframe(step, rotation_m, frame_width, frame_height, graph_width, graph_height)
+
+    # psi += 0.05
+    # rotation_m = cd.make_rotation(phi, thta, psi)
+
+    # routput = param.makeframe(voutput, rotation_m, frame_width, frame_height, graph_width, graph_height)
+
+    # param.printframe(routput, frame_height, frame_width)
+
+    # speed check
+    # end_time = time.time()
+    # elapsed_time = end_time - start_time
+    # print(elapsed_time)
+    
+    

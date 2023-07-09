@@ -3,7 +3,7 @@ import numpy as np
 import math as m
 
 
-class Surface:
+class Graph:
 
     def __init__(self, x, y, z):
         self.__x = x
@@ -52,6 +52,41 @@ class Surface:
                 output[rpos[1]][rpos[0]] = '#'
 
         return output
+    
+    def printframe(self, output, frame_height, frame_width):
+         # make frame
+        for k in range(0, frame_height):
+            for j in range(0, frame_width):
+                print(output[k][j], end="")
+            print("")
+
+    # def makeframe(self, step, rotation_m, frame_width, frame_height, graph_width, graph_height):
+    #     # output matrix
+    #     output = [ [' ']*frame_width for i in range(frame_height)]
+
+    #     for t_1 in decimal_range(-7, 7, step):
+    #         for t_2 in decimal_range(-7, 7, step):
+    #             x = t_1
+    #             y = t_2
+    #             z = t_1*t_2/10
+
+    #             v = np.array([x,y,z])
+    #             r = np.dot(rotation_m, v)
+
+
+    #             rpos = [int(frame_width/2 + r[1]/graph_width * frame_width),
+    #                 int(frame_height/2 - r[2]/graph_height * frame_height)]
+                
+    #             if rpos[0] < frame_width and rpos[1] < frame_height and rpos[0] >=0 and rpos[1] >= 0:
+    #                 output[rpos[1]][rpos[0]] = '#'
+
+    #     for k in range(0, frame_height):
+    #         for j in range(0, frame_width):
+    #             print(output[k][j], end="")
+    #         print("")
+
+                    
+         
 
 
 
