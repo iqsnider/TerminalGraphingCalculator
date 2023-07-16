@@ -1,13 +1,15 @@
 import calc3D as cd
 import time
+import math as m
 
 if __name__ == '__main__':
+    # x = "5*m.sin(thta)*m.cos(phi)"
+    # y = "5*m.sin(thta)*m.sin(phi)"
+    # z = "5*m.cos(thta)"
 
-    usleep = lambda x: time.sleep(x/1000000.0)
-
-    x = "t_1"
-    y = "t_2"
-    z = "t_1*t_2/10"
+    x = "x"
+    y = "y"
+    z = "x*y/10"
 
     frame_height = 40
     frame_width = 100
@@ -40,11 +42,11 @@ if __name__ == '__main__':
     psi = 0.3
     
     if propogate == False:
-        rotation_m = cd.make_rotation(phi, thta, psi)
-        routput = cd.makeframe(voutput, rotation_m, frame_width, frame_height, graph_width, graph_height)
-        cd.printframe(routput, frame_height, frame_width)
+        rotation_m = param.make_rotation(phi, thta, psi)
+        routput = param.makeframe(voutput, rotation_m, frame_width, frame_height, graph_width, graph_height)
+        param.printframe(routput, frame_height, frame_width)
 
-    else: cd.realtimerender(voutput, frame_width, frame_height, graph_width, graph_height)
+    else: param.realtimerender(voutput, frame_width, frame_height, graph_width, graph_height)
 
 
     # speed check

@@ -5,11 +5,6 @@ import time
 '''
 TODO:
 1. algebraically define a range for the value, t.
-4. luminance calculation
-5. runtime optimizations (it's real bad, gamers)
-6. Clean code
-7. Write a program for argument parsing a 3D function into a parametric system of equations for x, y, and z
-8. Make a new github repo called 3D graphing calculator
 '''
 
 # define elementary vectors without using Euler angles
