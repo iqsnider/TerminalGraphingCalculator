@@ -33,19 +33,19 @@ class Graph:
     
     def realtimerender(self, voutput, frame_width, frame_height, graph_width, graph_height, phi=-0.05, thta= -0.3, psi= 0.3):
      
-     usleep = lambda x: time.sleep(x/1000000.0)
-     
-     while True:
+        usleep = lambda x: time.sleep(x/1000000.0)
 
-        psi += 0.05
-        rotation_m = self.make_rotation(phi, thta, psi)
+        while True:
 
-        _routput = self.makeframe(voutput, rotation_m, frame_width, frame_height, graph_width, graph_height)
+            psi += 0.05
+            rotation_m = self.make_rotation(phi, thta, psi)
 
-        self.printframe(_routput, frame_height, frame_width)
+            _routput = self.makeframe(voutput, rotation_m, frame_width, frame_height, graph_width, graph_height)
 
-        print("\x1b["+ str(frame_height+1) + "A")
-        usleep(50000)
+            self.printframe(_routput, frame_height, frame_width)
+
+            print("\x1b["+ str(frame_height+1) + "A")
+            usleep(50000)
                   
 
 
@@ -77,9 +77,9 @@ class Graph:
 
 
     def decimal_range(self, start, stop, increment):
-            while start < stop:
-                yield start
-                start += increment
+        while start < stop:
+            yield start
+            start += increment
 
     # makes a rotation matrix from given Euler angles
     def make_rotation(self, phi, thta, psi):
